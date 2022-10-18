@@ -1,8 +1,8 @@
+//initializing var here 
 const express = require("express");
 const mongoose = require("mongoose");
-
 const routes = express.Router()
-
+//connects routes to model
 const employeeModel = require("../models/employee")
 
 //gets all employee list
