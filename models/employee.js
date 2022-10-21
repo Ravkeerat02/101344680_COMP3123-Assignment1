@@ -1,16 +1,12 @@
 const mongoose = require('mongoose');
-
-/*creating a schema to store the object
+// //creating a schema to store the object
 // {SAMPLE
 // //     "first_name" : "John",
 //         "last_name" : "Doe",
 //         "email" : "john@example.com
 //         "salary" : 100000.00
-//         "gender" : "male"
-    }   
-*/
-
-//Employee schema created 
+//         "gender" : "male"   
+// // }
 const employeeSchema = mongoose.Schema({
 
     first_name:{
@@ -29,6 +25,7 @@ const employeeSchema = mongoose.Schema({
         type:String,
         required: true,
         unique: true,
+        max:50
          
     },
 
@@ -40,7 +37,8 @@ const employeeSchema = mongoose.Schema({
     gender:{
         type: String,
         //enum - sets to predefined values - here it refers to different gender
-        emum :['Male','Female','Other' ]
+        emum :['Male','Female','Other' ],
+        max:25,
 
     }
 })
