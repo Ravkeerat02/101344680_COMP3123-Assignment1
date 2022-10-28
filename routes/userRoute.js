@@ -12,11 +12,11 @@ routes.post('/signup', async (request, response) => {
     try {
         const newUser = new userModel(request.body)
         await newUser.save()
-        response.status(201).send({
+        response.status(201).json({
             created_user: newUser
         })
     } catch (err) {
-        response.status(500).send({
+        response.status(500).json({
             "status": false, 
             "message": err.message
         })
@@ -37,7 +37,7 @@ routes.post('/login', async (request, response) => {
         res.status(200).json({"username": user.username, "password": user.password})
     }
     else {
-        response.status(400).send('Invalid username or Incorrect password');
+        response.status(400).json('Invalid username or Incorrect password');
     }
 });
  
