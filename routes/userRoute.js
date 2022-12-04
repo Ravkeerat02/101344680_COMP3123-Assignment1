@@ -10,15 +10,13 @@ const userModel = require("../models/user")
 //Signup
 routes.post('/signup', async (request, response) => {
     try {
-        const newUser = new userModel(request.body)
+        const newUser = new userModel({username: request.body.username, email: request.body.email,password:request.body.password});
         await newUser.save()
-        response.status(201).json({
-            created_user: newUser
-        })
-    } catch (err) {
+        response.status(201).send(newUser)
+        
+    } catch (error) {
         response.status(500).json({
-            "status": false, 
-            "message": err.message
+            message: error.message
         })
     }
 });
@@ -34,11 +32,11 @@ routes.post('/login', async (request, response) => {
     })
 
     if(user.password === password) {
-        res.status(200).json({"username": user.username, "password": user.password})
+        response.status(200).json({"username": user.username, "password": user.password})
     }
     else {
         response.status(400).json('Invalid username or Incorrect password');
     }
 });
  
-module.exports = routes
+module.exports = routes;

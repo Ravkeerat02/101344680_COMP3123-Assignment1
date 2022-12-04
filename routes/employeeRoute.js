@@ -7,12 +7,12 @@ const employeeModel = require("../models/employee")
 
 //gets all employee list
 routes.get('/employees',async(request,response) =>{
-    const employee = new employeeModel(request.body);
+    
     try{
-        await employee.save();
+        const employee = await employeeModel.find()
         response.status(200).json(employee);
     }catch(error){
-        response.status(400).json(employee);
+        response.status(500).json({message:error.message});
     }
 })
 
@@ -30,22 +30,22 @@ routes.post('/employees',async(request,response) =>{
 //GET - Gettign employee through ID
 routes.get('/employees/:empID',async(request,response) =>{
     try{
-        response.json(await employeeModel.findById(request.params.empID,request.body));
+       const getEmployee = await employeeModel.findById(request.params.empID,request.body)
+       response.send(getEmployee)
     }catch(error){
-        response.status(400).json(error);
+        response.status(400).json({message:error.message});
     }
 });
  //Updating employee
- routes.put("/employees/:empID",async(request,response) =>{
-    if(!request.body.content){
-        return response.status(400).json({
-            message: "Employee cant be empty",
-        })
-    }else{
-        await employeeModel.findByIdAndUpdate(request.params.empID,request.body.content);
-        response.json("Updated Sucessfully");
+ routes.put('/employees/:empID' ,async(request,response) =>{
+    try{
+        const updateEmployee = await employeeModel.findByIdAndUpdate(request.params.empID,request.body)
+        response.send(updateEmployee)
     }
-    });
+    catch(error){
+        response.status(400).json({message:error.message})
+    }
+})
 
 //Deleting an employee
 routes.delete("/employees/:empID",async(request,response) =>{
